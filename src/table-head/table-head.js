@@ -40,10 +40,10 @@ const TableHead = ({ numberOfMonth }) => {
 
 	return (
 		<tr>
-			<th style={{width: '20%'}}>Full Name</th>
-			<th style={{width: '20%'}}>Deal</th>
+			<th style={{width: '15%'}}>Full Name</th>
+			<th style={{width: '15%'}}>Deal</th>
 			<th style={{width: '120px'}}/>
-			{getMonthsCol(numberOfMonth - 1)}
+			{getMonthsCol(numberOfMonth)}
 			<th className="text-right align-middle" style={{width: '50px'}}>
 				<button className="btn btn-sm">Filter</button>
 			</th>

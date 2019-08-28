@@ -110,9 +110,9 @@ export default class UserService {
 					id: 5,
 					name: 'Ben Project 5',
 					status: 'vacation',
-					start: 'May 15, 2019',
+					start: 'February 15, 2019',
 					end: 'May 20, 2019',
-					progress: 60
+					progress: 100
 				}
 			]
 		},

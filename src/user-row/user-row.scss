@@ -1,24 +1,40 @@
-td {
-  &.user {
-    vertical-align: middle;
-    border-right: 1px solid #dee2e6;
+.user-row {
+  td {
+    &.user {
+      vertical-align: middle;
+      border-right: 1px solid #dee2e6;
 
-    & > div {
-      padding-left: 30px;
+      & > div {
+        padding-left: 30px;
+      }
+
+      img {
+        width: 50px;
+      }
     }
 
-    img {
-      width: 50px;
+    a {
+      text-decoration: underline;
+      font-weight: 600;
+      color: #000;
+
+      &:hover {
+        color: inherit;
+      }
     }
-  }
 
-  a {
-    text-decoration: underline;
-    font-weight: 600;
-    color: #000;
+    &.progress-col {
+      overflow: hidden;
+      padding: .3rem 0;
+      position: relative;
 
-    &:hover {
-      color: inherit;
+      .vertical-line {
+        position: absolute;
+        top: -12px;
+        width: 1px;
+        height: 60px;
+        z-index: 2;
+      }
     }
   }
 }

@@ -41,7 +41,7 @@ function filter(arr, type, q) {
 
 const App = () => {
 	const userService = new UserService();
-	const numberOfMonth = 6;
+	const numberOfMonth = 12;
 	const users = userService.getUsers();
 
 	const [usersState, setUsers] = useState(users);

@@ -61,7 +61,7 @@ const TableFilter = ({ numberOfMonth, onFiltered, onResetFilter }) => {
 					<option value="potential">Potential</option>
 				</select>
 			</th>
-			<th colSpan={numberOfMonth - 1}/>
+			<th colSpan={numberOfMonth}/>
 			<th className="text-right" style={{width: '50px'}}>
 				<button
 					className="btn btn-sm"
