@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
-import {CONST_LAST_COL_WIDTH} from '../../../constants'
+import { CONST_LAST_COL_WIDTH } from '../../../constants'
 
 const Filter = ({ numberOfMonth, onFilter, onResetFilter }) => {
 	const [name, setName] = useState('');
 	const [deal, setDeal] = useState('');
 	const [status, setStatus] = useState('');
 
-	const onSearchChange = ({target: {value, name}}) => {
+	const onSearchChange = ({ target: { value, name } }) => {
 		switch (name) {
 			case 'name':
 				setName(value);
@@ -68,7 +68,7 @@ const Filter = ({ numberOfMonth, onFilter, onResetFilter }) => {
 				</select>
 			</th>
 			<th colSpan={numberOfMonth}/>
-			<th className="text-right" style={{width: `${CONST_LAST_COL_WIDTH}px`}}>
+			<th className="text-right" style={{ width: `${CONST_LAST_COL_WIDTH}px` }}>
 				<button className="btn btn-sm" onClick={onReset}>
 					Reset
 				</button>

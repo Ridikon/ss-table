@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import ProjectProgress from '../../project-progress';
 import ProgressService from '../../../services/progress-service';
-import {CONST_LAST_COL_WIDTH} from '../../../constants'
+import { CONST_LAST_COL_WIDTH } from '../../../constants'
 
 import './table-row.scss'
 
@@ -43,8 +43,11 @@ export default class TableRow extends Component {
 		});
 	}
 
-	renderClientName = (index) => {
-		const { img, name, projects } = this.props.user;
+	/**
+	 * Render client info once
+	 */
+	renderClientInfo = (user, index) => {
+		const { img, name, projects } = user;
 
 		if (!index) {
 			return (
@@ -76,10 +79,10 @@ export default class TableRow extends Component {
 	};
 
 	render() {
-		const { numberOfMonth, user: { projects } } = this.props;
+		const { numberOfMonth, user } = this.props;
 		const { progressColWidth, todayPosition } = this.state;
 
-		return projects.map((project, i) => {
+		return user.projects.map((project, i) => {
 			const { id, status, name, start, end, progress } = project;
 
 			const badgeClasses = ['badge', 'badge-pill', this.setClass(status, 'badge')];
@@ -87,7 +90,7 @@ export default class TableRow extends Component {
 			return (
 				<tr key={id} className="user-row">
 
-					{this.renderClientName(i)}
+					{this.renderClientInfo(user, i)}
 
 					<td><a href="#" className="pl-3">{name}</a></td>
 					<td><span className={badgeClasses.join(' ')}>{status}</span></td>

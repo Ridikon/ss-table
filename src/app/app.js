@@ -41,7 +41,7 @@ const App = () => {
 	const numberOfMonth = 12;
 	const users = userService.getUsers();
 
-	const [usersState, setUsersState] = useState(users);
+	const [usersState] = useState(users);
 	const [term, setTerm] = useState('');
 	const [searchType, setSearchType] = useState('');
 	const [monthNumber, setMonthNumber] = useState(numberOfMonth);
@@ -65,21 +65,19 @@ const App = () => {
 	};
 
 	return (
-		<div>
-			<table className="table table-sm">
-				<thead>
-					<TableHead onChangeMonthNumber={onChangeMonthNumber} numberOfMonth={monthNumber}/>
-					<TableFilter
-						numberOfMonth={monthNumber}
-						onFilter={onFilterEvent}
-						onResetFilter={onResetFilter}
-					/>
-				</thead>
-				<tbody>
-					{renderBodyRow()}
-				</tbody>
-			</table>
-		</div>
+		<table className="table table-sm">
+			<thead>
+				<TableHead onChangeMonthNumber={onChangeMonthNumber} numberOfMonth={monthNumber}/>
+				<TableFilter
+					numberOfMonth={monthNumber}
+					onFilter={onFilterEvent}
+					onResetFilter={onResetFilter}
+				/>
+			</thead>
+			<tbody>
+				{renderBodyRow()}
+			</tbody>
+		</table>
 	);
 };
 

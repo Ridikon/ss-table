@@ -116,6 +116,12 @@ export default class UserService {
 				}
 			]
 		},
+		// {
+		// 	id: 4,
+		// 	name: 'Loki',
+		// 	img: 'https://img.icons8.com/plasticine/100/000000/user-male-circle.png',
+		// 	projects: []
+		// },
 	];
 
 	getUsers() {
