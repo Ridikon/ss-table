@@ -24,7 +24,7 @@ export default class UserService {
 					id: 1,
 					name: 'John Project 1',
 					status: 'billable',
-					start: 'March 21, 2019',
+					start: 'March 30, 2019',
 					end: 'June 2, 2019',
 					progress: 80
 				},
@@ -32,7 +32,7 @@ export default class UserService {
 					id: 2,
 					name: 'John Project 2',
 					status: 'vacation',
-					start: 'may 15, 2019',
+					start: 'February 19, 2019',
 					end: 'September 20, 2019',
 					progress: 50
 				},
@@ -40,7 +40,7 @@ export default class UserService {
 					id: 3,
 					name: 'John Project 3',
 					status: 'vacation',
-					start: 'may 15, 2019',
+					start: 'May 8, 2019',
 					end: 'September 20, 2019',
 					progress: 60
 				}
@@ -55,7 +55,7 @@ export default class UserService {
 					id: 1,
 					name: 'Mike Project 1',
 					status: 'internal',
-					start: 'March 21, 2019',
+					start: 'January 21, 2019',
 					end: 'July 2, 2019',
 					progress: 100
 				},
@@ -78,7 +78,7 @@ export default class UserService {
 					id: 1,
 					name: 'Ben Project 1',
 					status: 'billable',
-					start: 'March 21, 2019',
+					start: 'March 8, 2019',
 					end: 'June 2, 2019',
 					progress: 80
 				},
@@ -86,7 +86,7 @@ export default class UserService {
 					id: 2,
 					name: 'Ben Project 2',
 					status: 'potential',
-					start: 'May 15, 2019',
+					start: 'May 20, 2019',
 					end: 'September 20, 2019',
 					progress: 50
 				},

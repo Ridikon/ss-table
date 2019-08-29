@@ -1,5 +1,7 @@
 .user-row {
   td {
+    vertical-align: middle;
+
     &.user {
       vertical-align: middle;
       border-right: 1px solid #dee2e6;
@@ -32,7 +34,7 @@
         position: absolute;
         top: -12px;
         width: 1px;
-        height: 60px;
+        height: 80px;
         z-index: 2;
       }
     }

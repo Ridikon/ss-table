@@ -1,15 +1,17 @@
 import React from 'react';
 
-import UserService from '../services/user-service'
+import DropdownBtn from '../../dropdown-btn';
+import UserService from '../../../services/user-service'
+import {CONST_LAST_COL_WIDTH} from '../../../constants'
 
 import './table-head.scss'
 
-const TableHead = ({ numberOfMonth }) => {
+const TableHead = ({ numberOfMonth, onChangeMonthNumber }) => {
 	const userService = new UserService();
 	const months = userService.getMonth();
 	const getYear = new Date().getFullYear();
 
-	const getMonthsCol = (number) => {
+	const getMonthCol = (number) => {
 		return months.map((item, i) => {
 			if (i > number - 1) {
 				return;
@@ -43,9 +45,14 @@ const TableHead = ({ numberOfMonth }) => {
 			<th style={{width: '15%'}}>Full Name</th>
 			<th style={{width: '15%'}}>Deal</th>
 			<th style={{width: '120px'}}/>
-			{getMonthsCol(numberOfMonth)}
-			<th className="text-right align-middle" style={{width: '50px'}}>
-				<button className="btn btn-sm">Filter</button>
+			{getMonthCol(numberOfMonth)}
+			<th style={{width: `${CONST_LAST_COL_WIDTH}px`}}>
+				<DropdownBtn
+					onClickEvent={onChangeMonthNumber}
+					numberOfMonth={numberOfMonth}
+				>
+					Filter
+				</DropdownBtn>
 			</th>
 		</tr>
 	);

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ProgressService from "../services/progress-service";
+import ProgressService from '../../services/progress-service';
 
 import './project-progress.scss'
 
@@ -19,14 +19,14 @@ const ProjectProgress = ({ start, end, progress, numberOfMonth, bgClass, textCla
 
 	function setStyles() {
 		const styles = {};
-		const oneDay = colWidth / progressService.getDays(numberOfMonth);
+		const oneDayWidth = colWidth / progressService.getDays(numberOfMonth);
 		const startPosition = progressService.getPositionDay(start);
-		const endPosition = progressService.getPositionDay(end)
+		const endPosition = progressService.getPositionDay(end);
 
-		styles.left = (oneDay * startPosition) + 'px';
-		styles.width = ((oneDay * endPosition) - (oneDay * startPosition)) + 'px';
+		styles.left = (oneDayWidth * startPosition) + 'px';
+		styles.width = ((oneDayWidth * endPosition) - (oneDayWidth * startPosition)) + 'px';
 
-		return styles
+		return styles;
 	}
 
 	return (

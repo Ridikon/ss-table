@@ -1,24 +1,27 @@
 import React, {useState} from 'react';
 
-const TableFilter = ({ numberOfMonth, onFiltered, onResetFilter }) => {
+import {CONST_LAST_COL_WIDTH} from '../../../constants'
+
+const Filter = ({ numberOfMonth, onFilter, onResetFilter }) => {
 	const [name, setName] = useState('');
 	const [deal, setDeal] = useState('');
 	const [status, setStatus] = useState('');
 
-	const onSearchChange = ({target: {value}}, type) => {
-		if (type === 'name') {
-			setName(value)
+	const onSearchChange = ({target: {value, name}}) => {
+		switch (name) {
+			case 'name':
+				setName(value);
+				break;
+			case 'deal':
+				setDeal(value);
+				break;
+			case 'status':
+				setStatus(value);
+				break;
+			default:
+				return;
 		}
-		if (type === 'deal') {
-			setDeal(value)
-		}
-		if (type === 'status') {
-			if (!value) {
-				setStatus('');
-			}
-			setStatus(value)
-		}
-		onFiltered(value, type)
+		onFilter(value, name)
 	};
 
 	const onReset = () => {
@@ -34,27 +37,30 @@ const TableFilter = ({ numberOfMonth, onFiltered, onResetFilter }) => {
 				<input
 					className="form-control form-control-sm"
 					type="text"
+					name="name"
 					value={name}
 					placeholder="Title"
-					onChange={(event) => onSearchChange(event, 'name')}
+					onChange={onSearchChange}
 				/>
 			</th>
 			<th>
 				<input
 					className="form-control form-control-sm"
 					type="text"
+					name="deal"
 					value={deal}
 					placeholder="Title"
-					onChange={(event) => onSearchChange(event, 'deal')}
+					onChange={onSearchChange}
 				/>
 			</th>
 			<th>
 				<select
 					className="form-control form-control-sm"
 					value={status}
-					onChange={(event) => onSearchChange(event, 'status')}
+					name="status"
+					onChange={onSearchChange}
 				>
-					<option value={''}>Status</option>
+					<option value="">Status</option>
 					<option value="billable">Billable</option>
 					<option value="vacation">Vacation</option>
 					<option value="internal">Internal</option>
@@ -62,11 +68,8 @@ const TableFilter = ({ numberOfMonth, onFiltered, onResetFilter }) => {
 				</select>
 			</th>
 			<th colSpan={numberOfMonth}/>
-			<th className="text-right" style={{width: '50px'}}>
-				<button
-					className="btn btn-sm"
-					onClick={onReset}
-				>
+			<th className="text-right" style={{width: `${CONST_LAST_COL_WIDTH}px`}}>
+				<button className="btn btn-sm" onClick={onReset}>
 					Reset
 				</button>
 			</th>
@@ -74,4 +77,4 @@ const TableFilter = ({ numberOfMonth, onFiltered, onResetFilter }) => {
 	);
 };
 
-export default TableFilter;
+export default Filter;

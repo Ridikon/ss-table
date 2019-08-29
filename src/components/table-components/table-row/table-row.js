@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 
-import ProjectProgress from "../project-progress";
+import ProjectProgress from '../../project-progress';
+import ProgressService from '../../../services/progress-service';
+import {CONST_LAST_COL_WIDTH} from '../../../constants'
 
-import './user-row.scss'
-import ProgressService from "../services/progress-service";
+import './table-row.scss'
 
-export default class UserRow extends Component {
+export default class TableRow extends Component {
 	progressService = new ProgressService();
 
 	state = {
@@ -13,14 +14,32 @@ export default class UserRow extends Component {
 		todayPosition: 0
 	};
 
+	constructor(props) {
+		super(props);
+		this.progressRef = React.createRef();
+	}
+
 	componentDidMount() {
-		const {numberOfMonth} = this.props;
-		const progressColWidth = this.refs.progressRef.clientWidth;
-		const oneDay = progressColWidth / this.progressService.getDays(numberOfMonth);
+		this.computeProgressColWidth()
+	}
+
+	componentDidUpdate(prevProps, prevState, snapshot) {
+		if (prevProps.numberOfMonth === this.props.numberOfMonth) {
+			return;
+		}
+
+		this.computeProgressColWidth()
+	}
+
+	computeProgressColWidth() {
+		const { numberOfMonth } = this.props;
+		const node = this.progressRef.current;
+		const progressColWidth = node.clientWidth - CONST_LAST_COL_WIDTH;
+		const oneDayWidth = progressColWidth / this.progressService.getDays(numberOfMonth);
 
 		this.setState({
 			progressColWidth,
-			todayPosition: oneDay * this.progressService.getPositionDay(new Date())
+			todayPosition: oneDayWidth * this.progressService.getPositionDay(new Date())
 		});
 	}
 
@@ -56,7 +75,7 @@ export default class UserRow extends Component {
 		}
 	};
 
-	renderProjects = () => {
+	render() {
 		const { numberOfMonth, user: { projects } } = this.props;
 		const { progressColWidth, todayPosition } = this.state;
 
@@ -70,12 +89,12 @@ export default class UserRow extends Component {
 
 					{this.renderClientName(i)}
 
-					<td><a href="#">{name}</a></td>
+					<td><a href="#" className="pl-3">{name}</a></td>
 					<td><span className={badgeClasses.join(' ')}>{status}</span></td>
 					<td
 						className="progress-col"
 						colSpan={numberOfMonth + 1}
-						ref="progressRef"
+						ref={this.progressRef}
 					>
 						<ProjectProgress
 							bgClass={this.setClass(status, 'bg')}
@@ -87,16 +106,12 @@ export default class UserRow extends Component {
 							progress={progress}
 						/>
 						<span
-							style={{left: `${todayPosition}px`}}
+							style={{ left: `${todayPosition}px` }}
 							className="bg-primary vertical-line"
 						/>
 					</td>
 				</tr>
 			)
 		})
-	};
-
-	render() {
-		return this.renderProjects()
 	}
 };

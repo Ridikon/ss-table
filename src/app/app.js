@@ -1,41 +1,38 @@
 import React, { useState } from 'react';
 
 import UserService from '../services/user-service'
-import UserRow from "../user-row";
-import TableHead from "../table-head";
-import TableFilter from "../table-filter";
+import TableRow from '../components/table-components/table-row';
+import TableHead from '../components/table-components/table-head';
+import TableFilter from '../components/table-components/table-filter';
 
 import './app.scss'
 
+function getSearchResult(item, field, q) {
+	return item[field].toLowerCase().includes(q.toLowerCase())
+}
+
 function search(arr, searchField, q) {
 	return arr.filter(item => {
-		const projectItems = item.projects.filter(project => {
-			return project[searchField].toLowerCase().includes(q.toLowerCase())
+		item.projects = item.projects.filter(project => {
+			return getSearchResult(project, searchField, q);
 		});
-
-		item.projects = projectItems;
 
 		return item;
 	});
 }
 
-function filter(arr, type, q) {
+function filterUsersData(arr, type, q) {
 	const copyArr = JSON.parse(arr);
 
-	if (!q) {
-		return copyArr;
-	}
-
-	if (type === 'name') {
-		return copyArr.filter(item => item.name.toLowerCase().includes(q.toLowerCase()))
-	}
-
-	if (type === 'deal') {
-		return search(copyArr, 'name', q)
-	}
-
-	if (type === 'status') {
-		return search(copyArr, 'status', q)
+	switch (type) {
+		case 'name':
+			return copyArr.filter(item => getSearchResult(item, 'name', q));
+		case 'deal':
+			return search(copyArr, 'name', q);
+		case 'status':
+			return search(copyArr, 'status', q);
+		default:
+			return copyArr;
 	}
 }
 
@@ -44,18 +41,16 @@ const App = () => {
 	const numberOfMonth = 12;
 	const users = userService.getUsers();
 
-	const [usersState, setUsers] = useState(users);
+	const [usersState, setUsersState] = useState(users);
 	const [term, setTerm] = useState('');
 	const [searchType, setSearchType] = useState('');
-	const [monthNumberState, setMonthNumber] = useState(numberOfMonth);
+	const [monthNumber, setMonthNumber] = useState(numberOfMonth);
 
-	const visibleUsers = filter(JSON.stringify(usersState), searchType, term);
+	const visibleUsers = filterUsersData(JSON.stringify(usersState), searchType, term);
 
-	const renderBodyRow = () => {
-		return visibleUsers.map(user => <UserRow key={user.id} user={user} numberOfMonth={monthNumberState}/>)
-	};
+	const renderBodyRow = () => visibleUsers.map(user => <TableRow key={user.id} user={user} numberOfMonth={monthNumber}/>);
 
-	const onFiltered = (q, type) => {
+	const onFilterEvent = (q, type) => {
 		setTerm(q);
 		setSearchType(type);
 	};
@@ -65,19 +60,23 @@ const App = () => {
 		setSearchType('');
 	};
 
+	const onChangeMonthNumber = (monthNumber) => {
+		setMonthNumber(monthNumber)
+	};
+
 	return (
 		<div>
 			<table className="table table-sm">
 				<thead>
-				<TableHead numberOfMonth={monthNumberState}/>
-				<TableFilter
-					numberOfMonth={monthNumberState}
-					onFiltered={onFiltered}
-					onResetFilter={onResetFilter}
-				/>
+					<TableHead onChangeMonthNumber={onChangeMonthNumber} numberOfMonth={monthNumber}/>
+					<TableFilter
+						numberOfMonth={monthNumber}
+						onFilter={onFilterEvent}
+						onResetFilter={onResetFilter}
+					/>
 				</thead>
 				<tbody>
-				{renderBodyRow()}
+					{renderBodyRow()}
 				</tbody>
 			</table>
 		</div>

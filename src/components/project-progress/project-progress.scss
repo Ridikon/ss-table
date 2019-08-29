@@ -1,5 +1,7 @@
 .progress-line {
   position: relative;
+  display: flex;
+  align-items: center;
 
   &-wrapper {
     position: absolute;
