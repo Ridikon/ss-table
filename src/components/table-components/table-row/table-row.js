@@ -7,114 +7,120 @@ import { CONST_LAST_COL_WIDTH } from '../../../constants'
 import './table-row.scss'
 
 export default class TableRow extends Component {
-	progressService = new ProgressService();
+  progressService = new ProgressService();
 
-	state = {
-		progressColWidth: 0,
-		todayPosition: 0
-	};
+  state = {
+    progressColWidth: 0,
+    todayPosition: 0
+  };
 
-	constructor(props) {
-		super(props);
-		this.progressRef = React.createRef();
-	}
+  constructor(props) {
+    super(props);
+    this.progressRef = React.createRef();
+  }
 
-	componentDidMount() {
-		this.computeProgressColWidth()
-	}
+  componentDidMount() {
+    this.computeProgressColWidth()
+  }
 
-	componentDidUpdate(prevProps, prevState, snapshot) {
-		if (prevProps.numberOfMonth === this.props.numberOfMonth) {
-			return;
-		}
+  componentDidUpdate(prevProps) {
+    if (prevProps.numberOfMonth === this.props.numberOfMonth) {
+      return;
+    }
 
-		this.computeProgressColWidth()
-	}
+    this.computeProgressColWidth()
+  }
 
-	computeProgressColWidth() {
-		const { numberOfMonth } = this.props;
-		const node = this.progressRef.current;
-		const progressColWidth = node.clientWidth - CONST_LAST_COL_WIDTH;
-		const oneDayWidth = progressColWidth / this.progressService.getDays(numberOfMonth);
+  computeProgressColWidth() {
+    const { numberOfMonth, getProgressColWidth } = this.props;
+    const node = this.progressRef.current;
 
-		this.setState({
-			progressColWidth,
-			todayPosition: oneDayWidth * this.progressService.getPositionDay(new Date())
-		});
-	}
+    const progressColWidth = node.clientWidth - CONST_LAST_COL_WIDTH;
+    const oneDayWidth = progressColWidth / this.progressService.getDays(numberOfMonth);
 
-	/**
-	 * Render client info once
-	 */
-	renderClientInfo = (user, index) => {
-		const { img, name, projects } = user;
+    getProgressColWidth(progressColWidth);
 
-		if (!index) {
-			return (
-				<td rowSpan={projects.length} className="user">
-					<div>
-						<img src={img} alt="user image"/>
-						<a href="#">{name}</a>
-					</div>
-				</td>
-			)
-		}
+    this.setState({
+      progressColWidth,
+      todayPosition: oneDayWidth * this.progressService.getPositionDay(new Date())
+    });
+  }
 
-		return null;
-	};
+  /**
+   * Render client info once
+   * @param user
+   * @param index
+   * @returns {null|*}
+   */
+  renderClientInfo = (user, index) => {
+    const { img, name, projects } = user;
 
-	setClass = (status, type) => {
-		switch (status) {
-			case 'billable':
-				return `${type}-success`;
-			case 'vacation':
-				return `${type}-secondary`;
-			case 'internal':
-				return `${type}-primary`;
-			case 'potential':
-				return `${type}-warning`;
-			default:
-				return '';
-		}
-	};
+    if (!index) {
+      return (
+        <td rowSpan={projects.length} className="user">
+          <div>
+            <img src={img} alt="user image"/>
+            <a href="#">{name}</a>
+          </div>
+        </td>
+      )
+    }
 
-	render() {
-		const { numberOfMonth, user } = this.props;
-		const { progressColWidth, todayPosition } = this.state;
+    return null;
+  };
 
-		return user.projects.map((project, i) => {
-			const { id, status, name, start, end, progress } = project;
+  setClass = (status, type) => {
+    switch (status) {
+      case 'billable':
+        return `${type}-success`;
+      case 'vacation':
+        return `${type}-secondary`;
+      case 'internal':
+        return `${type}-primary`;
+      case 'potential':
+        return `${type}-warning`;
+      default:
+        return '';
+    }
+  };
 
-			const badgeClasses = ['badge', 'badge-pill', this.setClass(status, 'badge')];
+  render() {
+    const { numberOfMonth, user } = this.props;
+    const { progressColWidth, todayPosition } = this.state;
 
-			return (
-				<tr key={id} className="user-row">
+    return user.projects.map((project, i) => {
+      const { id, status, name, start, end, progress } = project;
 
-					{this.renderClientInfo(user, i)}
+      const badgeClasses = ['badge', 'badge-pill', this.setClass(status, 'badge')];
 
-					<td><a href="#" className="pl-3">{name}</a></td>
-					<td><span className={badgeClasses.join(' ')}>{status}</span></td>
-					<td
-						className="progress-col"
-						colSpan={numberOfMonth + 1}
-						ref={this.progressRef}
-					>
-						<ProjectProgress
-							bgClass={this.setClass(status, 'bg')}
-							textClass={this.setClass(status, 'text')}
-							colWidth={progressColWidth}
-							numberOfMonth={numberOfMonth}
-							start={start}
-							end={end}
-							progress={progress}
-						/>
-						<span
-							style={{ left: `${todayPosition}px` }}
-							className="bg-primary vertical-line"
-						/>
-					</td>
-				</tr>
-			)
-		})
-	}
+      return (
+        <tr key={id} className="user-row">
+
+          {this.renderClientInfo(user, i)}
+
+          <td><a href="#" className="pl-3">{name}</a></td>
+          <td><span className={badgeClasses.join(' ')}>{status}</span></td>
+          <td
+            className="progress-col"
+            colSpan={numberOfMonth + 1}
+            ref={this.progressRef}
+          >
+            <ProjectProgress
+              bgClass={this.setClass(status, 'bg')}
+              textClass={this.setClass(status, 'text')}
+              colWidth={progressColWidth}
+              numberOfMonth={numberOfMonth}
+              start={start}
+              end={end}
+              progress={progress}
+            />
+            <span
+              style={{ left: `${todayPosition}px` }}
+              className="bg-primary vertical-line"
+            />
+          </td>
+        </tr>
+      )
+    })
+  }
 };

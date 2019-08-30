@@ -1,6 +1,10 @@
 thead {
   th {
     font-weight: 600;
+
+    &.column-month {
+      padding: .3rem 0;
+    }
   }
 }
 
