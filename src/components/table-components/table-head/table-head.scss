@@ -1,10 +1,23 @@
-thead {
+.table-head {
   th {
     font-weight: 600;
+    vertical-align: middle;
 
     &.column-month {
       padding: .3rem 0;
     }
+
+    &:not(:nth-last-child(2)) {
+      &.column-month > div {
+        border-right: 1px solid #000;
+      }
+    }
+  }
+
+  &-dropdown {
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 }
 

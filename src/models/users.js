@@ -105,14 +105,14 @@ export const users = [
     name: 'Loki',
     img: 'https://img.icons8.com/plasticine/100/000000/user-male-circle.png',
     projects: [
-      {
-        id: 1,
-        name: 'Loki Project 1',
-        status: '',
-        start: null,
-        end: null,
-        progress: null
-      }
+      // {
+      //   id: 1,
+      //   name: 'Loki Project 1',
+      //   status: '',
+      //   start: null,
+      //   end: null,
+      //   progress: null
+      // }
     ]
   }
 ];
