@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import _ from 'lodash';
+
 import ProjectProgress from '../../project-progress';
 import ProgressService from '../../../services/progress-service';
 import { CONST_LAST_COL_WIDTH } from '../../../constants'
@@ -52,14 +54,15 @@ export default class TableRow extends Component {
    * @param index
    * @returns {null|*}
    */
-  renderClientInfo = (user, index) => {
+  static renderClientInfo(user, index) {
     const { img, name, projects } = user;
 
     if (!index) {
       return (
         <td rowSpan={projects.length} className="user">
           <div>
-            <img src={img} alt="user image"/>
+            <img src={img} alt="user"/>
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <a href="#">{name}</a>
           </div>
         </td>
@@ -69,7 +72,7 @@ export default class TableRow extends Component {
     return null;
   };
 
-  setClass = (status, type) => {
+  static setClass(status, type) {
     switch (status) {
       case 'billable':
         return `${type}-success`;
@@ -88,16 +91,17 @@ export default class TableRow extends Component {
     const { numberOfMonth, user } = this.props;
     const { progressColWidth, todayPosition } = this.state;
 
-    return user.projects.map((project, i) => {
+    return _.map(user.projects, (project, i) => {
       const { id, status, name, start, end, progress } = project;
 
-      const badgeClasses = ['badge', 'badge-pill', this.setClass(status, 'badge')];
+      const badgeClasses = ['badge', 'badge-pill', TableRow.setClass(status, 'badge')];
 
       return (
         <tr key={id} className="user-row">
 
-          {this.renderClientInfo(user, i)}
+          {TableRow.renderClientInfo(user, i)}
 
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
           <td><a href="#" className="pl-3">{name}</a></td>
           <td><span className={badgeClasses.join(' ')}>{status}</span></td>
           <td
@@ -106,8 +110,8 @@ export default class TableRow extends Component {
             ref={this.progressRef}
           >
             <ProjectProgress
-              bgClass={this.setClass(status, 'bg')}
-              textClass={this.setClass(status, 'text')}
+              bgClass={TableRow.setClass(status, 'bg')}
+              textClass={TableRow.setClass(status, 'text')}
               colWidth={progressColWidth}
               numberOfMonth={numberOfMonth}
               start={start}
