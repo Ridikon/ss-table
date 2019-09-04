@@ -26,10 +26,8 @@ function search(arr, searchField, q) {
   });
 }
 
-function filterUsersData(arr, type, q) {
-  let copyArr = JSON.parse(arr);
-
-  copyArr = _.map(copyArr, item => {
+function filterUsersData(clonedArr, type, q) {
+  clonedArr = _.map(clonedArr, item => {
     if (!item.projects.length) {
       const projectEmpty = {
         id: Math.random(),
@@ -48,13 +46,13 @@ function filterUsersData(arr, type, q) {
 
   switch (type) {
     case 'name':
-      return _.filter(copyArr, item => getSearchResult(item, type, q));
+      return _.filter(clonedArr, item => getSearchResult(item, type, q));
     case 'deal':
-      return search(copyArr, 'name', q);
+      return search(clonedArr, 'name', q);
     case 'status':
-      return search(copyArr, 'status', q);
+      return search(clonedArr, 'status', q);
     default:
-      return copyArr;
+      return clonedArr;
   }
 }
 
@@ -70,8 +68,7 @@ const App = () => {
   const [monthNumber, setMonthNumber] = useState(numberOfMonth);
 
   const oneDayWidth = progressColWidth / progressService.getDays(numberOfMonth);
-
-  let visibleUsers = filterUsersData(JSON.stringify(usersState), searchType, term);
+  const visibleUsers = filterUsersData(_.cloneDeep(usersState), searchType, term);
 
   useEffect(() => {
     setUsersState(userService.getUsers())
