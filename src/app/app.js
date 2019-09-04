@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import _ from 'lodash';
+
 import UserService from '../services/user-service'
 import ProgressService from '../services/progress-service';
 import TableRow from '../components/table-components/table-row';
@@ -13,19 +15,21 @@ function getSearchResult(item, field, q) {
 }
 
 function search(arr, searchField, q) {
-  return arr.filter(item => {
-    item.projects = item.projects.filter(project => getSearchResult(project, searchField, q));
+  return _.filter(arr, item => {
+    item.projects = _.filter(item.projects, project => getSearchResult(project, searchField, q));
 
     if (item.projects.length) {
       return item;
     }
+
+    return null;
   });
 }
 
 function filterUsersData(arr, type, q) {
   let copyArr = JSON.parse(arr);
 
-  copyArr = copyArr.map(item => {
+  copyArr = _.map(copyArr, item => {
     if (!item.projects.length) {
       const projectEmpty = {
         id: Math.random(),
@@ -44,7 +48,7 @@ function filterUsersData(arr, type, q) {
 
   switch (type) {
     case 'name':
-      return copyArr.filter(item => getSearchResult(item, type, q));
+      return _.filter(copyArr, item => getSearchResult(item, type, q));
     case 'deal':
       return search(copyArr, 'name', q);
     case 'status':
@@ -73,10 +77,6 @@ const App = () => {
     setUsersState(userService.getUsers())
   }, []);
 
-  const getProgressColWidth = (width) => {
-    setProgressColWidth(width);
-  };
-
   const renderBodyRow = (user) => {
     return (
       <TableRow
@@ -86,6 +86,10 @@ const App = () => {
         getProgressColWidth={getProgressColWidth}
       />
     )
+  };
+
+  const getProgressColWidth = (width) => {
+    setProgressColWidth(width);
   };
 
   const onFilterEvent = (q, type) => {
@@ -118,7 +122,7 @@ const App = () => {
           />
         </thead>
         <tbody className="table-body">
-          {visibleUsers.map(renderBodyRow)}
+          {_.map(visibleUsers, renderBodyRow)}
         </tbody>
       </table>
     </div>

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import _ from 'lodash';
+
 import DropdownBtn from '../../dropdown-btn';
 import UserService from '../../../services/user-service'
 import { CONST_LAST_COL_WIDTH } from '../../../constants'
@@ -20,13 +22,13 @@ const TableHead = ({ numberOfMonth, onChangeMonthNumber, oneDayWidth }) => {
     return oneDayWidth * monthDaysCount
   };
 
-  const monthCol = months.map((month, i) => {
+  const monthCol = _.map(months, (month, i) => {
     if (i > numberOfMonth - 1) {
       return null;
     }
 
     if (numberOfMonth > 8) {
-      month = month.slice(0, 3)
+      month = _.slice(month, 0, 3)
     }
 
     return (
@@ -56,7 +58,7 @@ const TableHead = ({ numberOfMonth, onChangeMonthNumber, oneDayWidth }) => {
             onClickEvent={onChangeMonthNumber}
             numberOfMonth={numberOfMonth}
           >
-            <i className="fa fa-sliders" aria-hidden="true"></i>
+            <i className="fa fa-sliders" aria-hidden="true"/>
           </DropdownBtn>
         </div>
       </th>
