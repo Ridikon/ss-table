@@ -22,8 +22,15 @@ export default class TableRow extends Component {
   }
 
   componentDidMount() {
+    window.addEventListener("resize", this.resizeEvent);
     this.computeProgressColWidth()
   }
+
+  resizeEvent = (e) => {
+    setTimeout(() => {
+      this.computeProgressColWidth();
+    }, 100)
+  };
 
   componentDidUpdate(prevProps) {
     if (prevProps.numberOfMonth === this.props.numberOfMonth) {
