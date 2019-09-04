@@ -6,66 +6,59 @@ import { CONST_LAST_COL_WIDTH } from '../../../constants'
 
 import './table-head.scss'
 
-const TableHead = ({ numberOfMonth, onChangeMonthNumber, tableHeadWidth }) => {
+const TableHead = ({ numberOfMonth, onChangeMonthNumber, oneDayWidth }) => {
   const userService = new UserService();
   const months = userService.getMonth();
   const getYear = new Date().getFullYear();
-  const monthColWidth = tableHeadWidth / numberOfMonth;
 
-  const getMonthCol = (number) => {
-    return months.map((item, i) => {
-      if (i > number - 1) {
-        return;
-      }
-
-      if (numberOfMonth > 8) {
-        item = item.slice(0, 3)
-      }
-
-      if (i === 0) {
-        return (
-          <th
-            key={item}
-            className="column-month"
-            style={{ width: `${monthColWidth}px` }}
-          >
-            <div className="text-center">
-              <span>{item} {getYear}</span>
-            </div>
-          </th>
-        )
-      }
-
-      return (
-        <th
-          key={item}
-          className="column-month"
-          style={{ width: `${monthColWidth}px` }}
-        >
-          <div
-            className="text-center"
-            style={{ borderLeft: '1px solid #000' }}
-          >
-            <span>{item} {getYear}</span>
-          </div>
-        </th>
-      )
-    });
+  const getDaysInMonth = (month, year) => {
+    return new Date(year, month, 0).getDate();
   };
+
+  const setMonthWidth = (month) => {
+    const monthDaysCount = getDaysInMonth(month + 1, getYear);
+    return oneDayWidth * monthDaysCount
+  };
+
+  const monthCol = months.map((month, i) => {
+    if (i > numberOfMonth - 1) {
+      return null;
+    }
+
+    if (numberOfMonth > 8) {
+      month = month.slice(0, 3)
+    }
+
+    return (
+      <th
+        key={month}
+        className="column-month"
+        style={{ width: `${setMonthWidth(i)}px` }}
+      >
+        <div className="text-center">
+          <span>{month} {getYear}</span>
+        </div>
+      </th>
+    )
+  });
 
   return (
     <tr>
       <th style={{ width: '15%' }}>Full Name</th>
       <th style={{ width: '15%' }}>Deal</th>
       <th style={{ width: '120px' }}/>
-      {getMonthCol(numberOfMonth)}
+
+      {monthCol}
+
       <th style={{ width: `${CONST_LAST_COL_WIDTH}px` }}>
-        <DropdownBtn
-          onClickEvent={onChangeMonthNumber}
-          numberOfMonth={numberOfMonth}
-        >
-          Filter
-        </DropdownBtn>
+        <div className="table-head-dropdown">
+          <DropdownBtn
+            onClickEvent={onChangeMonthNumber}
+            numberOfMonth={numberOfMonth}
+          >
+            <i className="fa fa-sliders" aria-hidden="true"></i>
+          </DropdownBtn>
+        </div>
       </th>
     </tr>
   );

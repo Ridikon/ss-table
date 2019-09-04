@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import './table-filter.scss'
+
 import { CONST_LAST_COL_WIDTH } from '../../../constants'
 
 const Filter = ({ numberOfMonth, onFilter, onResetFilter }) => {
@@ -69,9 +71,9 @@ const Filter = ({ numberOfMonth, onFilter, onResetFilter }) => {
       </th>
       <th colSpan={numberOfMonth}/>
       <th className="text-right" style={{ width: `${CONST_LAST_COL_WIDTH}px` }}>
-        <button className="btn btn-sm" onClick={onReset}>
+        <span className="filter-reset-btn" onClick={onReset}>
           Reset
-        </button>
+        </span>
       </th>
     </tr>
   );
