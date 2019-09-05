@@ -28,7 +28,7 @@ const TableHead = ({ numberOfMonth, onChangeMonthNumber, oneDayWidth }) => {
     }
 
     if (numberOfMonth > 8) {
-      month = _.slice(month, 0, 3)
+      month = _.slice(month, 0, 3).join('')
     }
 
     return (
@@ -38,7 +38,7 @@ const TableHead = ({ numberOfMonth, onChangeMonthNumber, oneDayWidth }) => {
         style={{ width: `${setMonthWidth(i)}px` }}
       >
         <div className="text-center">
-          <span>{month} {year}</span>
+          <span>{`${month} ${year}`}</span>
         </div>
       </th>
     )
