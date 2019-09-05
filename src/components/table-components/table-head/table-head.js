@@ -11,14 +11,14 @@ import './table-head.scss'
 const TableHead = ({ numberOfMonth, onChangeMonthNumber, oneDayWidth }) => {
   const userService = new UserService();
   const months = userService.getMonth();
-  const getYear = new Date().getFullYear();
+  const year = new Date().getFullYear();
 
   const getDaysInMonth = (month, year) => {
     return new Date(year, month, 0).getDate();
   };
 
   const setMonthWidth = (month) => {
-    const monthDaysCount = getDaysInMonth(month + 1, getYear);
+    const monthDaysCount = getDaysInMonth(month + 1, year);
     return oneDayWidth * monthDaysCount
   };
 
@@ -38,7 +38,7 @@ const TableHead = ({ numberOfMonth, onChangeMonthNumber, oneDayWidth }) => {
         style={{ width: `${setMonthWidth(i)}px` }}
       >
         <div className="text-center">
-          <span>{month} {getYear}</span>
+          <span>{month} {year}</span>
         </div>
       </th>
     )

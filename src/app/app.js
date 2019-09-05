@@ -67,7 +67,7 @@ const App = () => {
   const [searchType, setSearchType] = useState('');
   const [monthNumber, setMonthNumber] = useState(numberOfMonth);
 
-  const oneDayWidth = progressColWidth / progressService.getDays(numberOfMonth);
+  const oneDayWidth = progressService.getOneDayWidth(progressColWidth, numberOfMonth);
   const visibleUsers = filterUsersData(_.cloneDeep(usersState), searchType, term);
 
   useEffect(() => {
@@ -80,13 +80,9 @@ const App = () => {
         key={user.id}
         user={user}
         numberOfMonth={monthNumber}
-        getProgressColWidth={getProgressColWidth}
+        setProgressColWidth={setProgressColWidth}
       />
     )
-  };
-
-  const getProgressColWidth = (width) => {
-    setProgressColWidth(width);
   };
 
   const onFilterEvent = (q, type) => {
@@ -99,16 +95,12 @@ const App = () => {
     setSearchType('');
   };
 
-  const onChangeMonthNumber = (monthNumber) => {
-    setMonthNumber(monthNumber)
-  };
-
   return (
     <div className="table-responsive-md">
       <table className="table table-sm">
         <thead className="table-head">
           <TableHead
-            onChangeMonthNumber={onChangeMonthNumber}
+            onChangeMonthNumber={setMonthNumber}
             numberOfMonth={monthNumber}
             oneDayWidth={oneDayWidth}
           />

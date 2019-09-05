@@ -70,7 +70,7 @@ const Filter = ({ numberOfMonth, onFilter, onResetFilter }) => {
         </select>
       </th>
       <th colSpan={numberOfMonth}/>
-      <th className="text-right" style={{ width: `${CONST_LAST_COL_WIDTH}px` }}>
+      <th className="text-right filter-reset-col" style={{ width: `${CONST_LAST_COL_WIDTH}px` }}>
         <span className="filter-reset-btn" onClick={onReset}>
           Reset
         </span>

@@ -19,7 +19,7 @@ const ProjectProgress = ({ start, end, progress, numberOfMonth, bgClass, textCla
 
   function setStyles() {
     const styles = {};
-    const oneDayWidth = colWidth / progressService.getDays(numberOfMonth);
+    const oneDayWidth = progressService.getOneDayWidth(colWidth, numberOfMonth);
     const startPosition = progressService.getPositionDay(start);
     const endPosition = progressService.getPositionDay(end);
 

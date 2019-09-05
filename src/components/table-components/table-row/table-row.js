@@ -22,13 +22,16 @@ export default class TableRow extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener("resize", this.resizeEvent);
-    this.computeProgressColWidth()
+    window.addEventListener('resize', this.resizeEvent);
+
+    this.computeProgressColWidth();
+    this.computeTodayPosition()
   }
 
   resizeEvent = (e) => {
     setTimeout(() => {
       this.computeProgressColWidth();
+      this.computeTodayPosition()
     }, 100)
   };
 
@@ -37,21 +40,30 @@ export default class TableRow extends Component {
       return;
     }
 
-    this.computeProgressColWidth()
+    this.computeProgressColWidth();
+    this.computeTodayPosition()
   }
 
   computeProgressColWidth() {
-    const { numberOfMonth, getProgressColWidth } = this.props;
+    const { setProgressColWidth } = this.props;
     const node = this.progressRef.current;
-
     const progressColWidth = node.clientWidth - CONST_LAST_COL_WIDTH;
-    const oneDayWidth = progressColWidth / this.progressService.getDays(numberOfMonth);
 
-    getProgressColWidth(progressColWidth);
+    setProgressColWidth(progressColWidth);
 
     this.setState({
-      progressColWidth,
-      todayPosition: oneDayWidth * this.progressService.getPositionDay(new Date())
+      progressColWidth
+    });
+  }
+
+  computeTodayPosition() {
+    const { numberOfMonth } = this.props;
+    const node = this.progressRef.current;
+    const progressColWidth = node.clientWidth - CONST_LAST_COL_WIDTH;
+    const todayPosition = this.progressService.getTodayPosition(progressColWidth, numberOfMonth, new Date());
+
+    this.setState({
+      todayPosition
     });
   }
 
@@ -100,7 +112,6 @@ export default class TableRow extends Component {
 
     return _.map(user.projects, (project, i) => {
       const { id, status, name, start, end, progress } = project;
-
       const badgeClasses = ['badge', 'badge-pill', TableRow.setClass(status, 'badge')];
 
       return (
