@@ -4,10 +4,14 @@ import ProgressService from '../../services/progress-service';
 
 import './project-progress.scss'
 
+const { getOneDayWidth, getPositionDay } = new ProgressService();
+
 const ProjectProgress = ({ start, end, progress, numberOfMonth, bgClass, textClass, colWidth }) => {
   const clsBg = ['progress-line-bg'];
   const clsText = ['progress-line-text'];
-  const progressService = new ProgressService();
+  const oneDayWidth = getOneDayWidth(colWidth, numberOfMonth);
+  const startPosition = getPositionDay(start);
+  const endPosition = getPositionDay(end);
 
   if (bgClass) {
     clsBg.push(bgClass)
@@ -19,9 +23,6 @@ const ProjectProgress = ({ start, end, progress, numberOfMonth, bgClass, textCla
 
   function setStyles() {
     const styles = {};
-    const oneDayWidth = progressService.getOneDayWidth(colWidth, numberOfMonth);
-    const startPosition = progressService.getPositionDay(start);
-    const endPosition = progressService.getPositionDay(end);
 
     styles.left = (oneDayWidth * startPosition) + 'px';
     styles.width = ((oneDayWidth * endPosition) - (oneDayWidth * startPosition)) + 'px';
@@ -37,7 +38,7 @@ const ProjectProgress = ({ start, end, progress, numberOfMonth, bgClass, textCla
       >
 				<span className={clsBg.join(' ')}/>
 				<span className={clsText.join(' ')}>
-					{progress ? `${progress}%` : ''}
+					{progress && `${progress}%`}
 				</span>
 			</span>
     </div>

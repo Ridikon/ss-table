@@ -28,13 +28,6 @@ export default class TableRow extends Component {
     this.computeTodayPosition()
   }
 
-  resizeEvent = (e) => {
-    setTimeout(() => {
-      this.computeProgressColWidth();
-      this.computeTodayPosition()
-    }, 100)
-  };
-
   componentDidUpdate(prevProps) {
     if (prevProps.numberOfMonth === this.props.numberOfMonth) {
       return;
@@ -44,27 +37,34 @@ export default class TableRow extends Component {
     this.computeTodayPosition()
   }
 
+  resizeEvent = () => {
+    setTimeout(() => {
+      this.computeProgressColWidth();
+      this.computeTodayPosition()
+    }, 100)
+  };
+
   computeProgressColWidth() {
     const { setProgressColWidth } = this.props;
-    const node = this.progressRef.current;
-    const progressColWidth = node.clientWidth - CONST_LAST_COL_WIDTH;
 
-    setProgressColWidth(progressColWidth);
+    setProgressColWidth(this.getProgressColWidth());
 
     this.setState({
-      progressColWidth
+      progressColWidth: this.getProgressColWidth()
     });
   }
 
   computeTodayPosition() {
     const { numberOfMonth } = this.props;
-    const node = this.progressRef.current;
-    const progressColWidth = node.clientWidth - CONST_LAST_COL_WIDTH;
-    const todayPosition = this.progressService.getTodayPosition(progressColWidth, numberOfMonth, new Date());
 
     this.setState({
-      todayPosition
+      todayPosition: this.progressService.getTodayPosition(this.getProgressColWidth(), numberOfMonth, new Date())
     });
+  }
+
+  getProgressColWidth() {
+    const node = this.progressRef.current;
+    return node.clientWidth - CONST_LAST_COL_WIDTH
   }
 
   /**
