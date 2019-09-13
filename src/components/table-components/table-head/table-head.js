@@ -46,9 +46,9 @@ const TableHead = ({ numberOfMonth, onChangeMonthNumber, oneDayWidth }) => {
 
   return (
     <tr>
-      <th style={{ width: '15%' }}>Full Name</th>
-      <th style={{ width: '15%' }}>Deal</th>
-      <th style={{ width: '120px' }}/>
+      <th style={{ width: '15%', minWidth: '200px' }}>Full Name</th>
+      <th style={{ width: '15%', minWidth: '150px' }}>Deal</th>
+      <th style={{ width: '120px', minWidth: '100px' }}/>
 
       {monthCol}
 

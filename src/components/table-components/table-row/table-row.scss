@@ -34,10 +34,10 @@
       .vertical-line {
         opacity: .3;
         position: absolute;
-        top: -12px;
+        top: 0;
         width: 1px;
-        height: 80px;
-        z-index: auto;
+        height: 100%;
+        z-index: -1;
       }
     }
   }
