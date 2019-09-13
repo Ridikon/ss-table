@@ -11,14 +11,14 @@ import './table-head.scss'
 const TableHead = ({ numberOfMonth, onChangeMonthNumber, oneDayWidth }) => {
   const userService = new UserService();
   const months = userService.getMonth();
-  const getYear = new Date().getFullYear();
+  const year = new Date().getFullYear();
 
   const getDaysInMonth = (month, year) => {
     return new Date(year, month, 0).getDate();
   };
 
   const setMonthWidth = (month) => {
-    const monthDaysCount = getDaysInMonth(month + 1, getYear);
+    const monthDaysCount = getDaysInMonth(month + 1, year);
     return oneDayWidth * monthDaysCount
   };
 
@@ -28,7 +28,7 @@ const TableHead = ({ numberOfMonth, onChangeMonthNumber, oneDayWidth }) => {
     }
 
     if (numberOfMonth > 8) {
-      month = _.slice(month, 0, 3)
+      month = _.slice(month, 0, 3).join('')
     }
 
     return (
@@ -38,7 +38,7 @@ const TableHead = ({ numberOfMonth, onChangeMonthNumber, oneDayWidth }) => {
         style={{ width: `${setMonthWidth(i)}px` }}
       >
         <div className="text-center">
-          <span>{month} {getYear}</span>
+          <span>{`${month} ${year}`}</span>
         </div>
       </th>
     )
@@ -46,16 +46,16 @@ const TableHead = ({ numberOfMonth, onChangeMonthNumber, oneDayWidth }) => {
 
   return (
     <tr>
-      <th style={{ width: '15%' }}>Full Name</th>
-      <th style={{ width: '15%' }}>Deal</th>
-      <th style={{ width: '120px' }}/>
+      <th style={{ width: '15%', minWidth: '200px' }}>Full Name</th>
+      <th style={{ width: '15%', minWidth: '150px' }}>Deal</th>
+      <th style={{ width: '120px', minWidth: '100px' }}/>
 
       {monthCol}
 
       <th style={{ width: `${CONST_LAST_COL_WIDTH}px` }}>
         <div className="table-head-dropdown">
           <DropdownBtn
-            onClickEvent={onChangeMonthNumber}
+            onChangeMonthNumber={onChangeMonthNumber}
             numberOfMonth={numberOfMonth}
           >
             <i className="fa fa-sliders" aria-hidden="true"/>

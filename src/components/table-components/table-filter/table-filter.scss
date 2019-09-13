@@ -1,3 +1,9 @@
-.filter-reset-btn {
-  cursor: pointer;
+thead th {
+  &.filter-reset-col {
+    vertical-align: middle;
+  }
+
+  .filter-reset-btn {
+    cursor: pointer;
+  }
 }

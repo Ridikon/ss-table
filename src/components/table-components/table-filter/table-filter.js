@@ -2,23 +2,34 @@ import React, { useState } from 'react';
 
 import './table-filter.scss'
 
+import InputComponent from '../../form-components/input-component';
+import SelectComponent from '../../form-components/select-component';
 import { CONST_LAST_COL_WIDTH } from '../../../constants'
 
+const selectOptions = [
+  {name: 'Status', value: ''},
+  {name: 'Billable', value: 'billable'},
+  {name: 'Vacation', value: 'vacation'},
+  {name: 'Internal', value: 'internal'},
+  {name: 'Potential', value: 'potential'},
+];
+
 const Filter = ({ numberOfMonth, onFilter, onResetFilter }) => {
-  const [name, setName] = useState('');
-  const [deal, setDeal] = useState('');
-  const [status, setStatus] = useState('');
+  const [nameInput, setNameInput] = useState('');
+  const [dealInput, setDealInput] = useState('');
+  const [statusSelect, setStatusSelect] = useState('');
 
   const onSearchChange = ({ target: { value, name } }) => {
+    onReset();
     switch (name) {
       case 'name':
-        setName(value);
+        setNameInput(value);
         break;
       case 'deal':
-        setDeal(value);
+        setDealInput(value);
         break;
       case 'status':
-        setStatus(value);
+        setStatusSelect(value);
         break;
       default:
         return;
@@ -27,50 +38,40 @@ const Filter = ({ numberOfMonth, onFilter, onResetFilter }) => {
   };
 
   const onReset = () => {
-    setName('');
-    setDeal('');
-    setStatus('');
+    setNameInput('');
+    setDealInput('');
+    setStatusSelect('');
     onResetFilter();
   };
 
   return (
     <tr>
       <th>
-        <input
-          className="form-control form-control-sm"
-          type="text"
+        <InputComponent
+          value={nameInput}
           name="name"
-          value={name}
           placeholder="Title"
-          onChange={onSearchChange}
+          onSearch={onSearchChange}
         />
       </th>
       <th>
-        <input
-          className="form-control form-control-sm"
-          type="text"
+        <InputComponent
+          value={dealInput}
           name="deal"
-          value={deal}
           placeholder="Title"
-          onChange={onSearchChange}
+          onSearch={onSearchChange}
         />
       </th>
       <th>
-        <select
-          className="form-control form-control-sm"
-          value={status}
+        <SelectComponent
+          value={statusSelect}
           name="status"
-          onChange={onSearchChange}
-        >
-          <option value="">Status</option>
-          <option value="billable">Billable</option>
-          <option value="vacation">Vacation</option>
-          <option value="internal">Internal</option>
-          <option value="potential">Potential</option>
-        </select>
+          selectOptions={selectOptions}
+          onSearch={onSearchChange}
+        />
       </th>
       <th colSpan={numberOfMonth}/>
-      <th className="text-right" style={{ width: `${CONST_LAST_COL_WIDTH}px` }}>
+      <th className="text-right filter-reset-col" style={{ width: `${CONST_LAST_COL_WIDTH}px` }}>
         <span className="filter-reset-btn" onClick={onReset}>
           Reset
         </span>

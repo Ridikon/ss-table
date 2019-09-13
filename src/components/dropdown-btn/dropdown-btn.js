@@ -1,10 +1,6 @@
 import React from 'react';
 
-const DropdownBtn = ({ children, onClickEvent, numberOfMonth }) => {
-  const onChangeMonthNumber = (e) => {
-    onClickEvent(e.target.value);
-  };
-
+const DropdownBtn = ({ children, onChangeMonthNumber, numberOfMonth }) => {
   return (
     <div className="dropdown dropleft">
       <button className="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
@@ -19,7 +15,7 @@ const DropdownBtn = ({ children, onClickEvent, numberOfMonth }) => {
           type="number"
           name="number"
           value={numberOfMonth}
-          onChange={onChangeMonthNumber}
+          onChange={(e) => onChangeMonthNumber(e.target.value)}
           max="12"
           min="1"
         />
