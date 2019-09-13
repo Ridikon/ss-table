@@ -2,7 +2,7 @@ export const users = [
   {
     id: 1,
     name: 'John Dow',
-    img: 'https://img.icons8.com/carbon-copy/2x/user.png',
+    img: 'https://img.icons8.com/plasticine/100/000000/user-male-circle.png',
     projects: [
       {
         id: 1,
@@ -33,7 +33,7 @@ export const users = [
   {
     id: 2,
     name: 'Mike Johnson',
-    img: 'https://img.icons8.com/carbon-copy/2x/businessman.png',
+    img: 'https://img.icons8.com/plasticine/100/000000/user-male-circle.png',
     projects: [
       {
         id: 1,

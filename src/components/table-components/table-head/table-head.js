@@ -55,7 +55,7 @@ const TableHead = ({ numberOfMonth, onChangeMonthNumber, oneDayWidth }) => {
       <th style={{ width: `${CONST_LAST_COL_WIDTH}px` }}>
         <div className="table-head-dropdown">
           <DropdownBtn
-            onClickEvent={onChangeMonthNumber}
+            onChangeMonthNumber={onChangeMonthNumber}
             numberOfMonth={numberOfMonth}
           >
             <i className="fa fa-sliders" aria-hidden="true"/>
