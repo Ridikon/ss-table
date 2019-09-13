@@ -20,6 +20,7 @@ const Filter = ({ numberOfMonth, onFilter, onResetFilter }) => {
   const [statusSelect, setStatusSelect] = useState('');
 
   const onSearchChange = ({ target: { value, name } }) => {
+    onReset();
     switch (name) {
       case 'name':
         setNameInput(value);
